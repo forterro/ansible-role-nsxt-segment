@@ -1,0 +1,8 @@
+---
+# tasks file for vmware-nsxt-segment
+# Sync dictionaries
+- name: Combine default and user-defined dictionnaries
+  set_fact:
+    internal_nsxt_segment: "{{ internal_nsxt_segment | default({}) | combine({item.key : item.value}, recursive=True) }}"
+  loop: "{{ q('dict', nsxt_segment) }}"
+  when: nsxt_segment is defined
